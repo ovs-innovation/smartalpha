@@ -3,7 +3,7 @@ const WHATSAPP_NUMBER = "917500551110";
 const programs = {
   funds: {
     title: "Mutual Fund Solutions",
-    body: "Explore mutual fund options and relevant scheme information, subject to authorised services. Smart Alpha is an AMFI registered mutual fund distributor, ARN-142487. Scheme documents, scope and any fees are explained before you proceed. Mutual fund investments are subject to market risks."
+    body: "Explore mutual fund options and relevant scheme information, subject to authorised services. Smart Alpha is an AMFI registered mutual fund distributor, ARN-142487. Scheme documents, scope and any fees are explained before you proceed. Mutual fund in investment are subject to sentiment risk. Mutual fund investments are subject to market risks."
   },
   workshops: {
     title: "Corporate Workshops",

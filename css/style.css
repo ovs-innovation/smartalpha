@@ -168,6 +168,14 @@ h1, h2, h3, p { margin: 0; }
   color: #fff;
 }
 .hero h1 .hl { color: var(--red); }
+.hero-tag {
+  margin: 16px 0 0;
+  font-size: clamp(16px, 2.2vw, 20px);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #fff;
+}
+.hero-tag span { color: var(--red); letter-spacing: 1.5px; }
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -916,7 +924,7 @@ form.hide { display: none; }
 }
 .about-facts li {
   display: grid;
-  grid-template-columns: 110px 1fr;
+  grid-template-columns: 120px 1fr;
   gap: 16px;
   padding: 14px 0;
   border-bottom: 1px solid #e1e3e8;
