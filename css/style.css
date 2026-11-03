@@ -243,21 +243,34 @@ h1, h2, h3, p { margin: 0; }
   padding: 18px 18px 20px;
   color: #fff;
 }
-.deal img {
+.deal-fill,
+.deal-photo {
   position: absolute;
+  max-width: none;
+}
+.deal-fill {
+  inset: -24px;
+  width: calc(100% + 48px);
+  height: calc(100% + 48px);
+  object-fit: cover;
+  filter: blur(16px) brightness(0.55);
+}
+.deal-photo {
   inset: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
-  max-width: none;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
 }
 .deal::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.05) 32%, rgba(0, 0, 0, 0.15) 52%, rgba(0, 0, 0, 0.86) 100%);
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0) 28%, rgba(0, 0, 0, 0) 58%, rgba(0, 0, 0, 0.82) 100%);
 }
-.deal-top, .deal-copy { position: relative; z-index: 1; }
+.deal-top, .deal-copy { position: relative; z-index: 3; }
 .deal-top { display: flex; align-items: center; justify-content: space-between; }
 .deal-badge {
   background: #18181a;
