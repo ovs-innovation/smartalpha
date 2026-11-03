@@ -59,15 +59,30 @@ function openDetail(title, body, program) {
   else detail.setAttribute("open", "");
 }
 
+const waCopy = {
+  funds: "Hi Smart Alpha, I want to enquire about Mutual Fund Solutions.",
+  workshops: "Hi Smart Alpha, I want to organise a corporate workshop.",
+  review: "Hi Smart Alpha, I want to discuss a portfolio review.",
+  contact: "Hi Smart Alpha, I want to book a workshop."
+};
+
+function openWhatsApp(text) {
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  const link = document.createElement("a");
+  link.href = url;
+  link.target = "_blank";
+  link.rel = "noopener";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  return url;
+}
+
 document.querySelector("#detail-close").addEventListener("click", () => detail.close());
 document.querySelector("#detail-cta").addEventListener("click", () => {
-  const program = detail.dataset.program || "";
+  const program = detail.dataset.program || "contact";
   detail.close();
-  document.querySelectorAll('input[name="program"]').forEach((input) => {
-    input.value = program;
-  });
-  showWho(program === "funds" || program === "review" ? "person" : "company");
-  document.querySelector("#contact").scrollIntoView({ behavior: "smooth" });
+  openWhatsApp(waCopy[program] || waCopy.contact);
 });
 
 document.querySelectorAll("[data-program]").forEach((button) => {
@@ -138,13 +153,29 @@ document.querySelectorAll(".lead-form").forEach((form) => {
     const saved = JSON.parse(localStorage.getItem("smartalpha-leads") || "[]");
     saved.push({ ...data, phone, at: new Date().toISOString() });
     localStorage.setItem("smartalpha-leads", JSON.stringify(saved));
-    const lines = Object.entries(data)
-      .filter(([, value]) => String(value).trim())
-      .map(([key, value]) => `${key}: ${value}`);
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Smart Alpha enquiry\n${lines.join("\n")}`)}`;
+    const labels = {
+      enquiry: "Enquiry",
+      company: "Company",
+      name: "Name",
+      email: "Email",
+      phone: "Phone",
+      employees: "Team size",
+      date: "Preferred date",
+      format: "Format",
+      topics: "Topics",
+      interest: "Interest",
+      program: "Service"
+    };
+    const services = { funds: "Mutual Fund Solutions", workshops: "Corporate Workshops", review: "Portfolio Review" };
+    const lines = ["Hi Smart Alpha,"];
+    Object.entries(data).forEach(([key, value]) => {
+      const text = String(value || "").trim();
+      if (!text || !labels[key]) return;
+      lines.push(`${labels[key]}: ${key === "program" ? (services[text] || text) : text}`);
+    });
+    const url = openWhatsApp(lines.join("\n"));
     const fallback = success.querySelector("a");
     if (fallback) fallback.href = url;
-    window.open(url, "_blank", "noopener");
     form.classList.add("hide");
     success.classList.add("show");
   });
@@ -152,7 +183,8 @@ document.querySelectorAll(".lead-form").forEach((form) => {
 
 document.querySelectorAll("[data-open]").forEach((button) => {
   button.addEventListener("click", () => {
-    document.querySelector(`#${button.dataset.open}`).scrollIntoView({ behavior: "smooth" });
+    if (button.dataset.open === "contact") openWhatsApp(waCopy.contact);
+    else document.querySelector(`#${button.dataset.open}`).scrollIntoView({ behavior: "smooth" });
   });
 });
 
@@ -168,9 +200,7 @@ onScroll();
 toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
 document.querySelectorAll("[data-wa]").forEach((button) => {
-  button.addEventListener("click", () => {
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}`, "_blank", "noopener");
-  });
+  button.addEventListener("click", () => openWhatsApp("Hi Smart Alpha, I would like to talk."));
 });
 
 document.addEventListener("keydown", (event) => {
