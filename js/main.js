@@ -7,7 +7,7 @@ const programs = {
   },
   workshops: {
     title: "Corporate Workshops",
-    body: "Educational sessions for companies and employees covering budgeting, saving, investment fundamentals, risk awareness and financial goals. A workshop can be online or in person, and is tailored to the organisation."
+    body: "In-person sessions for companies and employees covering budgeting, saving, investment fundamentals, risk awareness and financial goals. Sachin comes to your office. The workshop is tailored to the organisation."
   },
   review: {
     title: "Investment Support & Portfolio Review",
@@ -146,7 +146,7 @@ document.querySelectorAll(".lead-form").forEach((form) => {
     const phone = String(data.phone || "").replace(/\D/g, "");
     let message = "";
     if (!form.checkValidity()) message = "Fill in the required fields.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email || "")) message = "Enter a valid email.";
+    else if (String(data.email || "").trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) message = "Enter a valid email.";
     else if (phone.length < 8 || phone.length > 14) message = "Enter a valid phone number.";
     error.textContent = message;
     if (message) return;
@@ -159,7 +159,7 @@ document.querySelectorAll(".lead-form").forEach((form) => {
       name: "Name",
       email: "Email",
       phone: "Phone",
-      employees: "Team size",
+      audience: "Who will attend",
       date: "Preferred date",
       format: "Format",
       topics: "Topics",
