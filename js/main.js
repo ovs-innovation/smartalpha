@@ -3,7 +3,7 @@ const WHATSAPP_NUMBER = "917500551110";
 const programs = {
   funds: {
     title: "Mutual Fund Solutions",
-    body: "Explore mutual fund options and relevant scheme information, subject to authorised services. Smart Alpha is an AMFI registered mutual fund distributor, ARN-142487. Scheme documents, scope and any fees are explained before you proceed. Mutual fund in investment are subject to sentiment risk. Mutual fund investments are subject to market risks."
+    body: "Explore mutual fund solutions, SIP, SIF, PMS, AIF and relevant scheme information, subject to authorised services. Smart Alpha is an AMFI registered mutual fund distributor, ARN-142487. Scheme documents, scope and any fees are explained before you proceed. Mutual fund in investment are subject to sentiment risk. Mutual fund investments are subject to market risks."
   },
   workshops: {
     title: "Corporate Workshops",
@@ -250,3 +250,147 @@ if (galleryTrack) {
 
   go(0);
 }
+
+/* =========================================================
+   PREDICTION CHATS CAROUSEL & LIGHTBOX
+   ========================================================= */
+(function initPredictionChats() {
+  const slider = document.querySelector("#chats-slider");
+  const prevBtn = document.querySelector("#chat-prev");
+  const nextBtn = document.querySelector("#chat-next");
+  const cards = [...document.querySelectorAll(".chat-card")];
+  const lightbox = document.querySelector("#chat-lightbox");
+  const lightboxImg = document.querySelector("#lightbox-img");
+  const lightboxTag = document.querySelector("#lightbox-tag");
+  const lightboxCounter = document.querySelector("#lightbox-counter");
+  const lightboxDirect = document.querySelector("#lightbox-direct");
+  const lightboxClose = document.querySelector("#lightbox-close");
+  const lightboxBackdrop = document.querySelector("#lightbox-backdrop");
+  const lightboxPrev = document.querySelector("#lightbox-prev");
+  const lightboxNext = document.querySelector("#lightbox-next");
+
+  if (!slider || !cards.length) return;
+
+  const chatData = cards.map((card, i) => ({
+    src: card.dataset.src,
+    title: card.dataset.title || `Market Prediction ${i + 1}`
+  }));
+
+  // Slider navigation
+  function scrollSlider(direction) {
+    const cardWidth = cards[0] ? cards[0].offsetWidth + 20 : 270;
+    const scrollAmount = cardWidth * (window.innerWidth < 680 ? 1 : 2);
+    slider.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+  }
+
+  if (prevBtn) prevBtn.addEventListener("click", () => scrollSlider(-1));
+  if (nextBtn) nextBtn.addEventListener("click", () => scrollSlider(1));
+
+  // Desktop click & drag scroll
+  let isDown = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let dragDistance = 0;
+
+  slider.addEventListener("mousedown", (e) => {
+    isDown = true;
+    dragDistance = 0;
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+    slider.classList.add("is-dragging");
+  });
+
+  window.addEventListener("mouseup", () => {
+    if (!isDown) return;
+    isDown = false;
+    slider.classList.remove("is-dragging");
+  });
+
+  slider.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX);
+    dragDistance = Math.abs(walk);
+    slider.scrollLeft = scrollLeft - walk;
+  });
+
+  // Lightbox
+  let currentIdx = 0;
+
+  function updateLightbox(idx) {
+    currentIdx = (idx + chatData.length) % chatData.length;
+    const item = chatData[currentIdx];
+    if (lightboxImg) {
+      lightboxImg.src = item.src;
+      lightboxImg.alt = item.title;
+    }
+    if (lightboxTag) lightboxTag.textContent = `Call #${String(currentIdx + 1).padStart(2, "0")}`;
+    if (lightboxCounter) lightboxCounter.textContent = `${currentIdx + 1} / ${chatData.length}`;
+    if (lightboxDirect) lightboxDirect.href = item.src;
+  }
+
+  function openLightbox(idx) {
+    if (!lightbox) return;
+    updateLightbox(idx);
+    if (typeof lightbox.showModal === "function") {
+      try { lightbox.showModal(); } catch (err) { lightbox.setAttribute("open", ""); }
+    } else {
+      lightbox.setAttribute("open", "");
+    }
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    if (typeof lightbox.close === "function" && lightbox.open) {
+      lightbox.close();
+    } else {
+      lightbox.removeAttribute("open");
+    }
+    document.body.style.overflow = "";
+  }
+
+  cards.forEach((card, i) => {
+    card.addEventListener("click", () => {
+      // Don't trigger lightbox if user was dragging
+      if (dragDistance > 6) return;
+      openLightbox(i);
+    });
+
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openLightbox(i);
+      }
+    });
+  });
+
+  if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
+  if (lightboxBackdrop) lightboxBackdrop.addEventListener("click", closeLightbox);
+  if (lightboxPrev) lightboxPrev.addEventListener("click", (e) => { e.stopPropagation(); updateLightbox(currentIdx - 1); });
+  if (lightboxNext) lightboxNext.addEventListener("click", (e) => { e.stopPropagation(); updateLightbox(currentIdx + 1); });
+
+  // Lightbox touch swipe
+  let lbTouchStartX = 0;
+  if (lightbox) {
+    lightbox.addEventListener("touchstart", (e) => {
+      lbTouchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    lightbox.addEventListener("touchend", (e) => {
+      const diffX = e.changedTouches[0].clientX - lbTouchStartX;
+      if (Math.abs(diffX) > 45) {
+        updateLightbox(diffX < 0 ? currentIdx + 1 : currentIdx - 1);
+      }
+    }, { passive: true });
+  }
+
+  // Keyboard navigation
+  window.addEventListener("keydown", (e) => {
+    if (!lightbox || !lightbox.open) return;
+    if (e.key === "Escape") closeLightbox();
+    else if (e.key === "ArrowLeft") updateLightbox(currentIdx - 1);
+    else if (e.key === "ArrowRight") updateLightbox(currentIdx + 1);
+  });
+})();
