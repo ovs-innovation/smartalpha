@@ -354,12 +354,89 @@ h1, h2, h3, p { margin: 0; }
   position: sticky;
   top: 88px;
 }
-.press img {
-  width: 100%;
-  height: auto;
-  display: block;
+.press-tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 4px;
   border-radius: 12px;
+  margin-bottom: 12px;
+}
+.press-tab {
+  flex: 1;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.press-tab:hover {
+  color: #fff;
+}
+.press-tab.active {
+  background: var(--red);
+  color: #06101f;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+.press-stage {
+  position: relative;
+}
+.press-slide {
+  animation: pressFade 0.25s ease;
+}
+@keyframes pressFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.press-img-wrap {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
   background: #fff;
+  cursor: pointer;
+}
+.press-img-wrap img {
+  width: 100%;
+  height: 420px;
+  object-fit: contain;
+  background: #fff;
+  display: block;
+  border-radius: 14px;
+  transition: transform 0.3s ease;
+}
+.press-img-wrap:hover img {
+  transform: scale(1.02);
+}
+.press-zoom-pill {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(16, 24, 44, 0.85);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.press-img-wrap:hover .press-zoom-pill {
+  background: var(--red);
+  color: #06101f;
 }
 .press figcaption {
   display: flex;
@@ -375,6 +452,35 @@ h1, h2, h3, p { margin: 0; }
   font-size: 12px;
   letter-spacing: 0.8px;
   text-transform: uppercase;
+}
+.press-arrows {
+  position: absolute;
+  top: calc(50% - 20px);
+  left: 6px;
+  right: 6px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.press-arrow {
+  pointer-events: auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(16, 24, 44, 0.8);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+.press-arrow:hover {
+  background: var(--red);
+  color: #06101f;
+  border-color: var(--red);
+  transform: scale(1.08);
 }
 .deal-copy h3 { margin: 0 0 6px; font-size: 18px; font-weight: 400; line-height: 1.3; }
 .deal-copy p { margin: 0; font-size: 14px; line-height: 1.45; color: rgba(255, 255, 255, 0.92); }
@@ -1435,6 +1541,8 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.62); }
   .dir-cols { columns: 1; }
   .predict-list { grid-template-columns: 1fr; }
   .press figcaption { flex-direction: column; gap: 4px; }
+  .press-img-wrap img { height: 320px; }
+  .press-tab { font-size: 11px; padding: 7px 4px; }
   .sticky-bar .btn { min-width: 0; flex: 1; font-size: 14px; }
   .predict-chats-intro { align-items: flex-start; }
   .chat-card { flex: 0 0 210px; }

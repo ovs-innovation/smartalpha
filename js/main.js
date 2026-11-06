@@ -394,3 +394,73 @@ if (galleryTrack) {
     else if (e.key === "ArrowRight") updateLightbox(currentIdx + 1);
   });
 })();
+
+/* =========================================================
+   PRESS ARTICLE SWITCHER & LIGHTBOX ZOOM
+   ========================================================= */
+(function initPressSwitcher() {
+  const tabs = [...document.querySelectorAll("[data-press-tab]")];
+  const slides = [...document.querySelectorAll("[data-press-slide]")];
+  const prevBtn = document.querySelector("#press-prev");
+  const nextBtn = document.querySelector("#press-next");
+  const zoomWraps = [...document.querySelectorAll("[data-press-zoom]")];
+  let current = 0;
+
+  if (!tabs.length || !slides.length) return;
+
+  function showSlide(index) {
+    current = (index + slides.length) % slides.length;
+    tabs.forEach((tab, i) => {
+      const active = i === current;
+      tab.classList.toggle("active", active);
+      tab.setAttribute("aria-selected", String(active));
+    });
+    slides.forEach((slide, i) => {
+      slide.style.display = i === current ? "block" : "none";
+      slide.classList.toggle("active", i === current);
+    });
+  }
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => showSlide(i));
+  });
+
+  if (prevBtn) prevBtn.addEventListener("click", () => showSlide(current - 1));
+  if (nextBtn) nextBtn.addEventListener("click", () => showSlide(current + 1));
+
+  // Lightbox zoom for press images
+  const lightbox = document.querySelector("#chat-lightbox");
+  const lightboxImg = document.querySelector("#lightbox-img");
+  const lightboxTag = document.querySelector("#lightbox-tag");
+  const lightboxCounter = document.querySelector("#lightbox-counter");
+  const lightboxDirect = document.querySelector("#lightbox-direct");
+
+  zoomWraps.forEach((wrap, i) => {
+    const trigger = () => {
+      if (!lightbox) return;
+      const src = wrap.dataset.pressZoom;
+      const title = wrap.dataset.pressTitle || "Hindustan Article";
+      if (lightboxImg) {
+        lightboxImg.src = src;
+        lightboxImg.alt = title;
+      }
+      if (lightboxTag) lightboxTag.textContent = "Hindustan Press";
+      if (lightboxCounter) lightboxCounter.textContent = `${i + 1} / ${zoomWraps.length}`;
+      if (lightboxDirect) lightboxDirect.href = src;
+      if (typeof lightbox.showModal === "function") {
+        try { lightbox.showModal(); } catch (err) { lightbox.setAttribute("open", ""); }
+      } else {
+        lightbox.setAttribute("open", "");
+      }
+      document.body.style.overflow = "hidden";
+    };
+
+    wrap.addEventListener("click", trigger);
+    wrap.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        trigger();
+      }
+    });
+  });
+})();

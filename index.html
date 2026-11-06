@@ -161,16 +161,58 @@
       <div class="predict-head">
         <p class="about-kicker">Predictions</p>
         <h2>Reading market <span class="hl">trends</span></h2>
-        <p class="lede">Hindustan carried Sachin Gupta’s name on a feature about momentum investing: how to read a trend that is already in the market, and what that way of looking can miss.</p>
-        <p class="predict-hindi">मोमेंटम इन्वेस्टिंग: रुझानों की संभावनाओं को समझना और उनका लाभ उठाएं</p>
+        <p class="lede">Hindustan carried Sachin Gupta’s insights on momentum investing and special situation funds: how to identify market trends, capitalize on emerging opportunities, and manage risk.</p>
+        <p class="predict-hindi">मोमेंटम इन्वेस्टिंग एवं स्पेशल सिचुएशन फंड: बाजार रुझानों की समझ और रणनीतिक लाभ</p>
       </div>
       <div class="predict-board">
-        <figure class="press">
-          <img src="pictures/newpaper.png" alt="Hindustan article on momentum investing, naming Sachin Gupta, mutual fund distributor, Moradabad">
-          <figcaption>
-            <b>Hindustan</b>
-            <span>Sachin Gupta · Mutual fund distributor · Moradabad</span>
-          </figcaption>
+        <figure class="press" id="press-card">
+          <div class="press-tabs" role="tablist" aria-label="Press Articles">
+            <button type="button" class="press-tab active" data-press-tab="0" role="tab" aria-selected="true">
+              Momentum Investing
+            </button>
+            <button type="button" class="press-tab" data-press-tab="1" role="tab" aria-selected="false">
+              Special Situation Fund
+            </button>
+          </div>
+
+          <div class="press-stage">
+            <div class="press-slide active" data-press-slide="0">
+              <div class="press-img-wrap" data-press-zoom="pictures/newpaper.png" data-press-title="Hindustan: Momentum Investing Feature" role="button" tabindex="0" aria-label="Click to enlarge Hindustan Momentum Investing article">
+                <img src="pictures/newpaper.png" alt="Hindustan article on momentum investing, naming Sachin Gupta, mutual fund distributor, Moradabad" loading="lazy">
+                <span class="press-zoom-pill">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                  Click to enlarge
+                </span>
+              </div>
+              <figcaption>
+                <b>Hindustan</b>
+                <span>Sachin Gupta · Momentum Investing · Moradabad</span>
+              </figcaption>
+            </div>
+
+            <div class="press-slide" data-press-slide="1" style="display: none;">
+              <div class="press-img-wrap" data-press-zoom="pictures/newspaper2.jpg" data-press-title="Hindustan: Special Situation Fund Feature" role="button" tabindex="0" aria-label="Click to enlarge Hindustan Special Situation Fund article">
+                <img src="pictures/newspaper2.jpg" alt="Hindustan article on Special Situation Fund, naming Sachin Gupta, mutual fund distributor, Moradabad" loading="lazy">
+                <span class="press-zoom-pill">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/></svg>
+                  Click to enlarge
+                </span>
+              </div>
+              <figcaption>
+                <b>Hindustan</b>
+                <span>Sachin Gupta · Special Situation Fund · Moradabad</span>
+              </figcaption>
+            </div>
+
+            <div class="press-arrows">
+              <button type="button" class="press-arrow prev" id="press-prev" aria-label="Previous newspaper article">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <button type="button" class="press-arrow next" id="press-next" aria-label="Next newspaper article">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
         </figure>
         <div class="predict-side">
           <blockquote class="predict-quote">
