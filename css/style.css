@@ -1417,7 +1417,47 @@ footer small { display: block; max-width: 720px; margin: 8px auto 0; font-size: 
   transition: transform 0.25s ease;
 }
 .sticky-bar.show { transform: translateY(0); }
-.sticky-bar .btn { height: 44px; padding: 0 22px; min-width: 160px; }
+.sticky-bar .btn { height: 48px; padding: 0 22px; min-width: 150px; }
+.sticky-bar .btn-workshop-deal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 22px;
+  min-width: 230px;
+  line-height: 1.15;
+}
+.ws-btn-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.ws-btn-pricing {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  margin-top: 2px;
+}
+.ws-old-price {
+  color: rgba(6, 16, 31, 0.72);
+  font-weight: 600;
+  text-decoration: line-through;
+  text-decoration-color: #d32f2f;
+  text-decoration-thickness: 1.5px;
+}
+.ws-free-pill {
+  background: #fff;
+  color: #06101f;
+  font-weight: 800;
+  font-size: 10px;
+  text-transform: uppercase;
+  padding: 1px 7px;
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
 
 .to-top {
   position: fixed;
@@ -1543,7 +1583,13 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.62); }
   .press figcaption { flex-direction: column; gap: 4px; }
   .press-img-wrap img { height: 320px; }
   .press-tab { font-size: 11px; padding: 7px 4px; }
-  .sticky-bar .btn { min-width: 0; flex: 1; font-size: 14px; }
+  .sticky-bar { padding: 8px 12px; gap: 8px; }
+  .sticky-bar .btn { min-width: 0; height: 48px; }
+  #wa-btn { flex: 0 0 100px; font-size: 13px; padding: 0 10px; }
+  .sticky-bar .btn-workshop-deal { flex: 1; min-width: 0; padding: 4px 6px; }
+  .ws-btn-title { font-size: 12.5px; }
+  .ws-btn-pricing { font-size: 10px; gap: 4px; }
+  .ws-free-pill { font-size: 9px; padding: 1px 5px; }
   .predict-chats-intro { align-items: flex-start; }
   .chat-card { flex: 0 0 210px; }
   .chat-img-wrap { height: 320px; }
